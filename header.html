@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>My Online Bookstore</title>
+</head>
+<body>
+
+<div>
+
+<div>
+<!-- TITLE -->
+<h2>My Online Bookstore</h2>
+<!-- END TITLE -->
+</div>
+
+<div>
+
+<ul>
+<!-- MENU -->
+
+<?php
+
+$pages = array('index.php', 'about.php', 'contact.php', 'register.php');
+$page_names = array('Home', 'About', 'Contact', 'Register');
+
+$this_page = basename($_SERVER['PHP_SELF']);
+
+for ($i = 0; $i <= 3; $i++)
+{
+  echo '<li><a href="' . $pages[$i] . '"><span>';
+  if ($this_page == $pages[$i])
+  {
+    echo '<b>' . $page_names[$i] . '</b></span></a></li>';
+  }
+  else
+  {
+    echo $page_names[$i] . '</span></a></li>';
+  }
+}
+
+?>
+
+</ul> 
+
+</div>
+<!-- END OF MENU -->
+

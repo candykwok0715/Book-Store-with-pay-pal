@@ -1,0 +1,89 @@
+<div>		
+
+<?php
+  if (isset($_SESSION['user_id'])) 
+  {
+	  $firstname = $_SESSION['user_firstname'];
+	  
+	  echo "<p>Welcome $firstname! You are now logged in.</p>";
+	  echo '<div>
+		  	<h4>Manage Your Account</h4>
+			</div>
+
+			<ul>
+	
+			<li><a href="renew.php" title="Renew Your Account">Renew Account</a></li>
+
+			<li><a href="change_password.php" title="Change Your Password">Change Password</a></li>
+
+			<li><a href="favorites.html" title="View Your Favorite Pages">Favorites</a></li>
+
+			<li><a href="history.html" title="View Your History">History</a></li>
+
+			<li><a href="recommendations.html" title="View Your Recommendations">Recommendations</a></li>
+
+			<li><a href="logout.php" title="Logout">Logout</a></li>
+
+			</ul>
+		';
+		require_once('mysql.inc.php');
+		$q = "SELECT type FROM users WHERE id={$_SESSION['user_id']}";	
+		$r = mysqli_query($dbc, $q);
+		$row = mysqli_fetch_array($r,MYSQLI_ASSOC);
+		
+		if($row['type']=='admin'){
+			echo'<div>
+			<h4>Administrator</h4>
+			</div>
+			<ul>
+			<li><a href="add_pdf.php" title="Add PDF">Add PDF</a></li>
+			</ul>
+			</div>
+			';
+		}
+		echo'<div>
+			<h4>Content</h4>
+			</div>
+
+			<ul>
+			<li><a href="pdfs.php" title="PDF Books">PDF Books</a></li>
+			</ul>
+	
+			</div>
+	  ';
+  }
+  else 
+  { // show the login form:
+	  if (!isset($login_errors)) 
+	      $login_errors = array();
+	  
+	  require_once('forms.inc.php');
+	  
+	  echo '<div>';
+	  echo '<h4>Login</h4>';
+	  echo '</div>';
+	  echo '<form action="index.php" method="post">';
+	  
+	  if (array_key_exists('login', $login_errors)) 
+	  {
+	  	 echo '<span>' . $login_errors['login'] . '</span><br />';
+	  }
+	  
+	  echo '<p>Email Address<br>';
+	  
+	  create_form_input('email', 'text', $login_errors);
+	  
+	  echo '</p><p>Password<br>';
+	  
+	  create_form_input('pass', 'password', $login_errors);
+	  echo'<a href="forgot_password.php" >Forget your password?</a>';
+	  echo '</p><input type="submit" value="Login">';
+	  echo '</form>';
+  }
+?>
+
+</div>
+
+
+</body>
+</html>
